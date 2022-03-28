@@ -4,20 +4,20 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>회원가입</title>
+<title>회원 가입</title>
 </head>
 <body>
-	<h1>회원가입</h1>
-	<hr>
-	<form action='#' method='get'>
-		<fieldset style="width:180px">
-			<legend>정보 입력</legend><p>
+<h1> 회원 가입 </h1>
+<hr>
+	<form action="#" method="get">
+		<fieldset style="width:200px">
+			<legend> 회원 정보 입력</legend>
 			ID : <br>
-			<input type="text" name="id"><br><br>
-			PASSWORD : <br>
-			<input type="password" name="passwd"><br><br>
-			<input type="submit" name="Register" value="Register">
-		</fieldset>
+			<input type="text" name="id"><br>
+			PW : <br>
+			<input type="password" name="pw"><br><br>
+			<input type="button" value="회원등록" onclick="location='Main.jsp'">
+	
 	</form>
 </body>
 </html>
