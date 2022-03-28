@@ -4,20 +4,22 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>201810972 유승민 JSP 프로젝트 게시판</title>
+<title>회원 가입</title>
 </head>
 <body>
-	<h1>로그인</h1>
-	<hr>
-	<form action="Login.jsp" method="get">
-		<fieldset style="width:180px">
+<h1> 회원 가입 </h1>
+<hr>
+	<form action="#" method="get">
+		<fieldset style="width:200px">
+			<legend> 회원 정보 입력</legend>
 			ID : <br>
-			<input type="text" name="id"><br><br>
-			PASSWORD : <br>
-			<input type="password" name="passwd"><br><br>
-			&nbsp; <input type="submit" value=" Login "> &nbsp;
-			<input type="button" value="Register" onclick="location='Register.jsp'">
-		</fieldset>
+			<input type="text" name="id"><br>
+			PW : <br>
+			<input type="password" name="pw"><br><br>
+			<input type="radio" name="gender" value="남성">남
+			<input type="radio" name="gender" value="여성">여 <br><br>
+			<input type="button" value="회원등록" onclick="location='Main.jsp'">
+	
 	</form>
 </body>
 </html>
