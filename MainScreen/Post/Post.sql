@@ -1,0 +1,8 @@
+use MassageBoard;
+
+CREATE TABLE IF NOT EXISTS post(
+	id INT PRIMARY KEY,
+	title VARCHAR(20) NOT NULL,
+	contents TEXT NOT NULL,
+	signuptime TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+	);
