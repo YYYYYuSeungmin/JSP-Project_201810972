@@ -8,11 +8,36 @@
 <html>
 <head>
 <% 
-Enumeration en = session.getAttributeNames();
-String name = null;
-String u_id = null;
-String u_name = null;
-Boolean u_mg = null;
+	Enumeration en = session.getAttributeNames();
+	String name = null;
+	String u_id = null;
+	String u_name = null;
+	Boolean u_mg = null;
+	int firstPage = 1;
+	int lastPage = 0;
+	int pageNum;
+	int count = 0;
+	
+	Statement sm = conn.createStatement();
+	ResultSet rs = sm.executeQuery("SELECT * FROM post ORDER BY postID DESC");
+	while(rs.next()){
+		count++;
+	}
+	lastPage = (count / 10) + 1;
+	
+	if (request.getParameter("pageNum") != null){
+		pageNum = Integer.parseInt(request.getParameter("pageNum"));
+		if(pageNum < 1){
+			pageNum = 1;
+		}
+		if (pageNum > lastPage){
+			pageNum = lastPage;
+		}
+	}
+	else {
+		pageNum = 1;
+	}
+	
 	if(en.hasMoreElements()){
 		name = en.nextElement().toString();
 		u_id = session.getAttribute("ID").toString();
@@ -40,8 +65,10 @@ Boolean u_mg = null;
 	</h1>
 	<hr>
 		<%
-		Statement sm = conn.createStatement();
-		ResultSet rs = sm.executeQuery("SELECT * FROM post ORDER BY postID DESC");
+		rs = sm.executeQuery("SELECT * FROM post ORDER BY postID DESC");
+		for (int i = 0; i < (pageNum-1) * 10; i++){
+			rs.next();
+		}
 		%>
 	<fieldset style="width:520px">
 		<table border="1" style="row:30">
@@ -51,15 +78,23 @@ Boolean u_mg = null;
 				<th style="width:100px">작성자</th>
 				<th style="width:100px">작성일</th>
 			</tr>
-		<% while(rs.next()){ %>
-			<tr>
-				<td><%=rs.getInt("postID") %></td>
-				<td><A href="Post/ViewPost.jsp?postID=<%=rs.getString("postID")%>" style="color:black; text-decoration:none"><%=rs.getString("title") %></A></td>
-				<td><%=rs.getString("writerID") %></td>
-				<td><%=rs.getDate("signuptime") %></td>
-			</tr>
-		<% } %>
+		<%
+		for (int i = 0; i < 10; i++){
+				if(rs.next()){ %>
+				<tr>
+					<td><%=rs.getInt("postID") %></td>
+					<td><A href="Post/ViewPost.jsp?postID=<%=rs.getString("postID")%>" style="color:black; text-decoration:none"><%=rs.getString("title") %></A></td>
+					<td><%=rs.getString("writerID") %></td>
+					<td><%=rs.getDate("signuptime") %></td>
+				</tr>
+		 		<%} 
+		}%>
+
 		</table>
+		<A href="MainScreen.jsp?pageNum=<%=firstPage%>" style="color:black; text-decoration:none">[처음]</A>
+		<A href="MainScreen.jsp?pageNum=<%=pageNum-1%>" style="color:black; text-decoration:none">[이전]</A>
+		<A href="MainScreen.jsp?pageNum=<%=pageNum+1%>" style="color:black; text-decoration:none">[다음]</A>
+		<A href="MainScreen.jsp?pageNum=<%=lastPage%>" style="color:black; text-decoration:none">[마지막]</A>
 		<div align="right">
 			<input type="button" value="글 작성" onclick="location='Post/CreatePost.jsp'">
 		</div>
